@@ -166,7 +166,7 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-black">
-      {/* Messenger Header */}
+      {}
       <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
@@ -194,7 +194,7 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
         </button>
       </div>
 
-      {/* Messages Area - Messenger Style */}
+      {}
       <div className="flex-1 overflow-y-auto p-4 space-y-3 pb-4">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full text-gray-500 dark:text-gray-400 text-center">
@@ -282,7 +282,7 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Image Preview */}
+      {}
       {imagePreview && (
         <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 flex items-center gap-3">
           <div className="relative inline-block">
@@ -301,7 +301,7 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
         </div>
       )}
 
-      {/* Reply Preview */}
+      {}
       {replyingTo && (
         <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 flex items-center justify-between">
           <div className="text-sm text-gray-700 dark:text-gray-300">
@@ -317,7 +317,7 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
         </div>
       )}
 
-      {/* Messenger Input Area */}
+      {}
       <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 flex gap-2">
         <input
           type="file"

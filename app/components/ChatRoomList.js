@@ -60,7 +60,7 @@ export default function ChatRoomList({ onSelectRoom }) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black flex flex-col">
-      {/* Google Header */}
+      {}
       <div className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex justify-between items-center">
         <div className="flex gap-4 text-sm text-gray-600 dark:text-gray-400">
           <a href="#" className="hover:underline">About</a>
@@ -76,9 +76,9 @@ export default function ChatRoomList({ onSelectRoom }) {
         </div>
       </div>
 
-      {/* Main Content - Top Section */}
+      {}
       <div className="flex-1 flex flex-col items-center justify-start px-4 pt-8">
-        {/* Logo/Title - Google Style */}
+        {}
         <div className="mb-8 mt-12">
           <h1 className="text-9xl font-light tracking-tight">
             <span className="text-blue-500">G</span>
@@ -90,9 +90,9 @@ export default function ChatRoomList({ onSelectRoom }) {
           </h1>
         </div>
 
-        {/* Search/Create Section */}
+        {}
         <div className="w-full max-w-3xl mb-8">
-          {/* Search Bar - Google Style */}
+          {}
           <div className="relative mb-6">
             <div className="flex items-center gap-3 px-5 py-3 border border-gray-300 dark:border-gray-600 rounded-full bg-white dark:bg-gray-900 hover:shadow-lg transition shadow-sm hover:border-gray-400 dark:hover:border-gray-500">
               <FiSearch className="text-gray-400" size={18} />
@@ -105,7 +105,7 @@ export default function ChatRoomList({ onSelectRoom }) {
               />              <button className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">🎤</button>            </div>
           </div>
 
-          {/* Action Buttons - Google Style */}
+          {}
           <div className="flex gap-3 justify-center">
             <button
               onClick={() => {
