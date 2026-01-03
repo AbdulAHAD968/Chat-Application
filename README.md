@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CheatWithFaizan
+
+A real-time chat application built with [Next.js](https://nextjs.org) and [Firebase](https://firebase.google.com), enabling users to create chat rooms, exchange messages, and share media seamlessly.
+
+## Features
+
+- **Real-time Chat Rooms**: Create and join multiple chat rooms
+- **Live Messaging**: Instant message delivery using Firebase Firestore
+- **User Profiles**: Set usernames for chat identification
+- **Media Sharing**: Upload and share images within chat rooms
+- **Responsive Design**: Modern UI built with Tailwind CSS
+- **Real-time Updates**: Automatic updates using Firebase listeners
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React 19
+- **Database**: Firebase Firestore
+- **Storage**: Firebase Storage
+- **Styling**: Tailwind CSS
+- **Icons**: React Icons
+- **Language**: JavaScript
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- Firebase account with a configured project
+- Environment variables set up
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure Firebase
+
+Create a `.env.local` file in the root directory with your Firebase configuration:
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+### 3. Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── components/
+│   ├── ChatRoom.js       - Main chat room component
+│   └── ChatRoomList.js   - List of available chat rooms
+├── lib/
+│   └── firebase.js       - Firebase configuration and initialization
+├── layout.js             - Root layout component
+├── page.js               - Home page
+└── globals.css           - Global styles
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Navigate to the application
+2. Browse available chat rooms on the home page
+3. Click on a room to enter it
+4. Set your username when prompted
+5. Start chatting and sharing media with other users
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is private. All rights reserved.
