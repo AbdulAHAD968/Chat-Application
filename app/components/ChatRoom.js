@@ -10,7 +10,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { db } from '@/app/lib/firebase';
-import { FiSend, FiImage, FiX } from 'react-icons/fi';
+import { FiSend, FiImage, FiX, FiDownload, FiFile } from 'react-icons/fi';
 
 export default function ChatRoom({ roomId, roomName, onBackClick }) {
   const [messages, setMessages] = useState([]);
@@ -21,8 +21,11 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageBase64, setImageBase64] = useState(null);
   const [replyingTo, setReplyingTo] = useState(null);
+  const [fileData, setFileData] = useState(null);
+  const [fileName, setFileName] = useState(null);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const documentInputRef = useRef(null);
 
   useEffect(() => {
     const storedName = localStorage.getItem('userName');
@@ -97,8 +100,30 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
     }
   };
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target.result;
+        setFileData(base64);
+        setFileName(file.name);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const downloadFile = (base64Data, fileName) => {
+    const link = document.createElement('a');
+    link.href = base64Data;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const sendMessage = async () => {
-    if (!inputValue.trim() && !imageBase64) return;
+    if (!inputValue.trim() && !imageBase64 && !fileData) return;
 
     try {
       setUploading(true);
@@ -110,6 +135,11 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
 
       if (imageBase64) {
         messageData.imageData = imageBase64;
+      }
+
+      if (fileData) {
+        messageData.fileData = fileData;
+        messageData.fileName = fileName;
       }
 
       if (replyingTo) {
@@ -127,6 +157,8 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
       setInputValue('');
       setImagePreview(null);
       setImageBase64(null);
+      setFileData(null);
+      setFileName(null);
       setReplyingTo(null);
       setUploading(false);
     } catch (error) {
@@ -251,6 +283,33 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
                     className="max-w-full rounded-xl mt-2 max-h-64 cursor-pointer hover:opacity-90"
                   />
                 )}
+                {msg.fileData && (
+                  <div
+                    className={`mt-2 p-3 rounded-lg flex items-center justify-between ${
+                      msg.userName === userName
+                        ? 'bg-blue-400'
+                        : 'bg-gray-200 dark:bg-gray-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FiFile size={18} />
+                      <span className="text-sm font-medium truncate max-w-xs">
+                        {msg.fileName || 'File'}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => downloadFile(msg.fileData, msg.fileName || 'download')}
+                      className={`ml-2 p-1 rounded hover:opacity-80 transition ${
+                        msg.userName === userName
+                          ? 'hover:bg-blue-500'
+                          : 'hover:bg-gray-300 dark:hover:bg-gray-600'
+                      }`}
+                      title="Download file"
+                    >
+                      <FiDownload size={16} />
+                    </button>
+                  </div>
+                )}
                 <span
                   className={`text-xs opacity-70 mt-1 block ${
                     msg.userName === userName
@@ -302,6 +361,28 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
       )}
 
       {}
+      {fileData && (
+        <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 flex items-center gap-3">
+          <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            <FiFile size={18} className="text-gray-600 dark:text-gray-400" />
+            <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-xs">
+              {fileName}
+            </span>
+          </div>
+          <button
+            onClick={() => {
+              setFileData(null);
+              setFileName(null);
+              if (documentInputRef.current) documentInputRef.current.value = '';
+            }}
+            className="p-1 text-red-500 hover:bg-red-50 dark:hover:bg-red-900 rounded-full transition"
+          >
+            <FiX size={18} />
+          </button>
+        </div>
+      )}
+
+      {}
       {replyingTo && (
         <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 flex items-center justify-between">
           <div className="text-sm text-gray-700 dark:text-gray-300">
@@ -326,6 +407,12 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
           accept="image/*"
           className="hidden"
         />
+        <input
+          type="file"
+          ref={documentInputRef}
+          onChange={handleFileSelect}
+          className="hidden"
+        />
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
@@ -333,6 +420,14 @@ export default function ChatRoom({ roomId, roomName, onBackClick }) {
           title="Attach image"
         >
           <FiImage size={20} />
+        </button>
+        <button
+          onClick={() => documentInputRef.current?.click()}
+          disabled={uploading}
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition disabled:opacity-50 text-gray-600 dark:text-gray-400"
+          title="Attach file"
+        >
+          <FiFile size={20} />
         </button>
         <input
           type="text"
